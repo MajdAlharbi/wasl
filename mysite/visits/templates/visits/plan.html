@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %}خطة زيارتي — وصل{% endblock %}
+{%block content %}
+<h2>خطة زيارتي</h2>
+
+<ol>
+  {% for item in items %}
+
+  <li>
+    <h3>{{ item.booth.name }}</h3>
+    <p>{{ item.booth.description }}</p>
+    <p>المدة التقديرية: {{ item.booth.visit_duration }} دقيقة</p>
+    <p>الحالة: {{ item.get_status_display }}</p>
+    <form method="post" action="{% url 'visits:update_status' item.id %}">
+      {% csrf_token %}
+
+      <button type="submit" name="status" value="visited">تمت زيارته</button>
+
+      <button type="submit" name="status" value="skipped">تم تخطيه</button>
+
+      <button type="submit" name="status" value="planned">
+        إعادة إلى مخطط
+      </button>
+    </form>
+    <form method="post" action="{% url 'visits:remove_from_plan' item.id %}">
+      {% csrf_token %}
+      <button type="submit">حذف من الخطة</button>
+    </form>
+  </li>
+  {% empty %}
+  <li>خطتك فارغة؛ أضف بوثًا للبدء.</li>
+  {% endfor %}
+</ol>
+
+<a href="{% url 'visits:index' %}">العودة إلى البوثات</a>
+{% endblock %}

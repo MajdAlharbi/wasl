@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}إنشاء حساب — وصل{% endblock %}
+
+{% block content %}
+<h2>إنشاء حساب</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">إنشاء الحساب</button>
+</form>
+
+<p>
+    عندك حساب؟
+    <a href="{% url 'accounts:login' %}">تسجيل الدخول</a>
+</p>
+{% endblock %}

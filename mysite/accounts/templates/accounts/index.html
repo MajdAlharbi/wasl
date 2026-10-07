@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}الرئيسية — وصل{% endblock %} 
+{% block content %}
+<h2>مرحبًا {{ request.user.username }}</h2>
+<p>هنا تبدأ خطة زيارتك لإكسبو.</p>
+<p>
+  <a href="{% url 'visits:index' %}">استكشف البوثات</a>
+</p>
+<p>
+  <a href="{% url 'visits:select_goals' %}"> تحديد أهداف الزيارة </a>
+</p>
+
+<form method="post" action="{% url 'accounts:logout' %}">
+  {% csrf_token %}
+  <button type="submit">تسجيل الخروج</button>
+</form>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %}البوثات — وصل{% endblock %} {% block content %}
+<h2>استكشف البوثات</h2>
+<p>
+  <a href="{% url 'visits:plan' %}">عرض خطتي</a>
+</p>
+{% for booth in booths %}
+
+<article>
+  <h3>{{ booth.name }}</h3>
+  <p>{{ booth.description }}</p>
+  <p>مدة الزيارة التقديرية: {{ booth.visit_duration }} دقيقة</p>
+
+  <p>الأهداف المرتبطة:</p>
+
+  <ul>
+    {% for goal in booth.goals.all %}
+    <li>{{ goal.name }}</li>
+    {% empty %}
+    <li>لم تُحدد أهداف لهذا البوث.</li>
+    {% endfor %}
+  </ul>
+  <form method="post" action="{% url 'visits:add_to_plan' booth.id %}">
+    {% csrf_token %}
+    <button type="submit">أضف إلى خطتي</button>
+  </form>
+</article>
+
+<hr />
+{% empty %}
+<p>لا توجد بوثات حاليًا.</p>
+{% endfor %} {% endblock %}
