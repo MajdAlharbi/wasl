@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}تفضيلات الزيارة — إيماء{% endblock %}
+
+{% block content %}
+<h2>تفضيلات الزيارة والتواصل</h2>
+<p>حدد الوقت المتاح واختر أدوات التواصل التي تناسبك.</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">حفظ</button>
+</form>
+{% endblock %}

@@ -1,7 +1,17 @@
-{% extends "base.html" %} {% block title %}خطة زيارتي — وصل{% endblock %}
+{% extends "base.html" %} {% block title %}خطة زيارتي — إيماء{% endblock %}
 {%block content %}
 <h2>خطة زيارتي</h2>
+<p>الوقت المتاح: {{ available_minutes }} دقيقة</p>
+<p>إجمالي مدة البوثات: {{ total_minutes }} دقيقة</p>
+<p>هذه المدة تقديرية ولا تشمل التنقل أو الانتظار.</p>
 
+{% if over_limit %}
+<p>خطتك تتجاوز الوقت المتاح؛ احذف بعض البوثات أو عدّل الوقت.</p>
+{% endif %}
+
+<p>
+  <a href="{% url 'accounts:preferences' %}"> تعديل الوقت المتاح </a>
+</p>
 <ol>
   {% for item in items %}
 
@@ -20,6 +30,13 @@
       <button type="submit" name="status" value="planned">
         إعادة إلى مخطط
       </button>
+    </form>
+    <form method="post" action="{% url 'visits:move_plan_item' item.id %}">
+      {% csrf_token %} {% if not forloop.first %}
+      <button type="submit" name="direction" value="up">للأعلى</button>
+      {% endif %} {% if not forloop.last %}
+      <button type="submit" name="direction" value="down">للأسفل</button>
+      {% endif %}
     </form>
     <form method="post" action="{% url 'visits:remove_from_plan' item.id %}">
       {% csrf_token %}

@@ -25,4 +25,14 @@ urlpatterns = [
         views.update_status,
         name="update_status",
     ),
+    path(
+        "plan/move/<int:item_id>/",
+        views.move_plan_item,
+        name="move_plan_item",
+    ),
+    path(
+        "booths/<int:booth_id>/",
+        views.booth_detail,
+        name="booth_detail",
+    ),
 ]

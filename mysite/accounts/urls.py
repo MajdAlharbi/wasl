@@ -17,4 +17,5 @@ urlpatterns = [
         auth_views.LogoutView.as_view(),
         name="logout",
     ),
+    path("preferences/", views.preferences, name="preferences"),
 ]

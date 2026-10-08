@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}الرئيسية — وصل{% endblock %} 
+{% extends "base.html" %} {% block title %}الرئيسية — إيماء{% endblock %} 
 {% block content %}
 <h2>مرحبًا {{ request.user.username }}</h2>
 <p>هنا تبدأ خطة زيارتك لإكسبو.</p>
@@ -7,6 +7,9 @@
 </p>
 <p>
   <a href="{% url 'visits:select_goals' %}"> تحديد أهداف الزيارة </a>
+</p>
+<p>
+  <a href="{% url 'accounts:preferences' %}"> تعديل الوقت المتاح للزيارة </a>
 </p>
 
 <form method="post" action="{% url 'accounts:logout' %}">

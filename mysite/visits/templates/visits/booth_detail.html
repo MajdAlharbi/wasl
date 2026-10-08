@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block title %}{{ booth.name }} — إيماء{% endblock%} {% block content %}
+<h2>{{ booth.name }}</h2>
+
+<p>{{ booth.description }}</p>
+<p>مدة الزيارة التقديرية: {{ booth.visit_duration }} دقيقة</p>
+
+<h3>إتاحة التواصل</h3>
+<ul>
+  {% if booth.has_sign_language %}
+  <li>يتوفر محتوى بلغة الإشارة</li>
+  {% endif %} {% if booth.has_captions %}
+  <li>يتوفر نص مكتوب للمحتوى</li>
+  {% endif %} {% if not booth.has_sign_language and not booth.has_captions %}
+  <li>معلومات إتاحة التواصل غير مضافة بعد.</li>
+  {% endif %}
+</ul>
+{% if show_captions %}
+<section>
+  <h3>📝 محتوى البوث</h3>
+
+  {% if booth.content_text %} {{ booth.content_text|linebreaks }} {% else %}
+  <p>المحتوى المكتوب غير متوفر حاليًا.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+<p>
+  <a href="{% url 'accounts:preferences' %}"> تعديل تفضيلات التواصل </a>
+</p>
+<form method="post" action="{% url 'visits:add_to_plan' booth.id %}">
+  {% csrf_token %}
+  <button type="submit">أضف إلى خطتي</button>
+</form>
+
+<p>
+  <a href="{% url 'visits:index' %}">العودة إلى البوثات</a>
+</p>
+{% endblock %}

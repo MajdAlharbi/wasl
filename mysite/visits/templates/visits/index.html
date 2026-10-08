@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %}البوثات — وصل{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}البوثات — إيماء{% endblock %} 
+{%block content %}
+
 <h2>استكشف البوثات</h2>
 <p>
   <a href="{% url 'visits:plan' %}">عرض خطتي</a>
@@ -6,7 +8,9 @@
 {% for booth in booths %}
 
 <article>
-  <h3>{{ booth.name }}</h3>
+  <h3>
+    <a href="{% url 'visits:booth_detail' booth.id %}"> {{ booth.name }} </a>
+  </h3>
   <p>{{ booth.description }}</p>
   <p>مدة الزيارة التقديرية: {{ booth.visit_duration }} دقيقة</p>
 
@@ -18,6 +22,15 @@
     {% empty %}
     <li>لم تُحدد أهداف لهذا البوث.</li>
     {% endfor %}
+  </ul>
+  <ul>
+    {% if booth.has_sign_language %}
+    <li>محتوى بلغة الإشارة</li>
+    {% endif %} {% if booth.has_captions %}
+    <li>نص مكتوب للمحتوى</li>
+    {% endif %} {% if not booth.has_sign_language and not booth.has_captions %}
+    <li>معلومات إتاحة التواصل غير مضافة بعد.</li>
+    {% endif %}
   </ul>
   <form method="post" action="{% url 'visits:add_to_plan' booth.id %}">
     {% csrf_token %}

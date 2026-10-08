@@ -19,6 +19,19 @@ class Booth(models.Model):
     )
     visit_duration = models.PositiveIntegerField(default=15)
 
+    has_sign_language = models.BooleanField(
+        default=False,
+        verbose_name="يتوفر محتوى بلغة الإشارة",
+    )
+    has_captions = models.BooleanField(
+        default=False,
+        verbose_name="يتوفر نص مكتوب للمحتوى",
+    )
+    content_text = models.TextField(
+        blank=True,
+        verbose_name="النص المكتوب لمحتوى البوث",
+    )
+
     def __str__(self):
         return self.name
 
